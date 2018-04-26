@@ -1,8 +1,8 @@
 import express from 'express';
 import path from 'path';
 
-import mongoose from './db/mongoose';
 import'./config/config';
+import './db/mongoose';
 
 import * as eventsController from './controllers/events.controller';
 import * as membersController from './controllers/members.controller';

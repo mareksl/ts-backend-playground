@@ -6,4 +6,3 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 mongoose_1.default.Promise = global.Promise;
 mongoose_1.default.connect(process.env.MONGODB_URI);
-exports.default = mongoose_1.default;

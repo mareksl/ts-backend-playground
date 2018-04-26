@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 require("./config/config");
+require("./db/mongoose");
 const eventsController = __importStar(require("./controllers/events.controller"));
 const membersController = __importStar(require("./controllers/members.controller"));
 const contactsController = __importStar(require("./controllers/contacts.controller"));
