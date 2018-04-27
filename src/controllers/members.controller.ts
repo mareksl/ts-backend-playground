@@ -1,6 +1,6 @@
 import { ObjectID } from 'mongodb';
 import { Request, Response } from 'express';
-import Member from '../models/member.model';
+import Member, { IMember } from '../models/member.model';
 import { pick } from '../util/util';
 
 export const post = (req: Request, res: Response) => {
@@ -90,7 +90,7 @@ export const patch = (req: Request, res: Response) => {
     .catch(e => res.status(400).send());
 };
 
-export const fetchAll = () => {
+export const fetchAll: () => Promise<void | IMember[]> = () => {
   return Member.find()
     .then(members => members)
     .catch(e => {

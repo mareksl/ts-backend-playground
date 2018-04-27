@@ -79,3 +79,4 @@ exports.fetchAll = () => {
         console.log(e);
     });
 };
+//# sourceMappingURL=events.controller.js.map

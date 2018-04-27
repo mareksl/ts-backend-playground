@@ -42,3 +42,4 @@ const memberSchema = new mongoose_1.default.Schema({
 });
 const Member = mongoose_1.default.model('Member', memberSchema);
 exports.default = Member;
+//# sourceMappingURL=member.model.js.map

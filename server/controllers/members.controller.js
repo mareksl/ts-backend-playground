@@ -84,3 +84,4 @@ exports.fetchAll = () => {
         console.log(e);
     });
 };
+//# sourceMappingURL=members.controller.js.map

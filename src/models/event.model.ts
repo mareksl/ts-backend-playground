@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import validator from 'validator';
 
-export type EventModel = mongoose.Document & {
+export interface IEvent extends Document {
   location: string;
   date: number;
   description: string;
   link: string;
-};
+}
 
 const eventSchema = new mongoose.Schema({
   location: {

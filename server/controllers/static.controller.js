@@ -18,28 +18,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const eventsController = __importStar(require("../controllers/events.controller"));
 const membersController = __importStar(require("../controllers/members.controller"));
 const contactsController = __importStar(require("../controllers/contacts.controller"));
+const sortMembers = (a, b) => {
+    if (a.order < b.order) {
+        return -1;
+    }
+    if (a.order > b.order) {
+        return 1;
+    }
+    return 0;
+};
 exports.default = (req, res) => __awaiter(this, void 0, void 0, function* () {
     try {
         const eventList = yield eventsController.fetchAll();
         const memberList = yield membersController.fetchAll();
         const contactList = yield contactsController.fetchAll();
-        const sortedMembers = memberList.sort((a, b) => {
-            if (a.order < b.order) {
-                return -1;
-            }
-            if (a.order > b.order) {
-                return 1;
-            }
-            return 0;
-        });
-        res.render('index.hbs', {
-            title: 'BAND',
-            eventList,
-            memberList: sortedMembers,
-            contactList
-        });
+        let sortedMembers = [];
+        if (memberList) {
+            sortedMembers = memberList.sort(sortMembers);
+            res.render('index.hbs', {
+                title: 'BAND',
+                eventList,
+                memberList: sortedMembers,
+                contactList
+            });
+        }
     }
     catch (e) {
         res.status(500).send();
     }
 });
+//# sourceMappingURL=static.controller.js.map

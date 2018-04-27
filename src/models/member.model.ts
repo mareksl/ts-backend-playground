@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import validator from 'validator';
 
-export type MemberModel = mongoose.Document & {
+export interface IMember extends Document {
   firstName: string;
   lastName: string;
   bio: string;
   avatar: string;
   order: number;
   role: string;
-};
+}
 
 const memberSchema = new mongoose.Schema({
   firstName: {
@@ -46,5 +46,5 @@ const memberSchema = new mongoose.Schema({
   }
 });
 
-const Member = mongoose.model('Member', memberSchema);
+const Member = mongoose.model<IMember>('Member', memberSchema);
 export default Member;

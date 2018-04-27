@@ -86,3 +86,4 @@ exports.fetchAll = () => {
         console.log(e);
     });
 };
+//# sourceMappingURL=contacts.controller.js.map

@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import validator from 'validator';
 
-export type ContactModel = mongoose.Document & {
+export interface IContact extends Document {
   type: string;
   firstName?: string;
   lastName?: string;
@@ -9,7 +9,7 @@ export type ContactModel = mongoose.Document & {
   email?: string;
   phone?: string;
   link?: string;
-};
+}
 
 const contactSchema = new mongoose.Schema({
   type: {
@@ -77,5 +77,5 @@ const contactSchema = new mongoose.Schema({
   }
 });
 
-const Contact = mongoose.model('Contact', contactSchema);
+const Contact = mongoose.model<IContact>('Contact', contactSchema);
 export default Contact;
