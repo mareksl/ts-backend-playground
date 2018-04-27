@@ -4,7 +4,9 @@ interface PickObject<T> {
 }
 export function pick<U>(object: PickObject<U>, properties: string[]) {
   return properties.reduce((acc: PickObject<U>, prop: string) => {
-    acc[prop] = object[prop];
+    if (object[prop]) {
+      acc[prop] = object[prop];
+    }
     return acc;
   }, {});
 }

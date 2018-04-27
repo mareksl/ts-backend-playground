@@ -87,7 +87,7 @@ export const patch = (req: Request, res: Response) => {
       }
       res.send({ member });
     })
-    .catch(e => res.status(400).send());
+    .catch(e => res.status(400).send(e));
 };
 
 export const fetchAll: () => Promise<void | IMember[]> = () => {
