@@ -10,7 +10,7 @@ export const post = (req: Request, res: Response) => {
     lastName: req.body.lastName,
     title: req.body.title,
     email: req.body.email,
-    telephone: req.body.telephone,
+    phone: req.body.phone,
     link: req.body.link
   });
 
@@ -70,7 +70,7 @@ export const patch = (req: Request, res: Response) => {
     'lastName',
     'title',
     'email',
-    'telephone',
+    'phone',
     'link'
   ]);
 
@@ -89,7 +89,7 @@ export const patch = (req: Request, res: Response) => {
       }
       res.send({ contact });
     })
-    .catch(e => res.status(400).send());
+    .catch(e => res.status(400).send(e));
 };
 
 export const fetchAll = () => {

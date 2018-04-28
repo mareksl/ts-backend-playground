@@ -13,7 +13,7 @@ exports.post = (req, res) => {
         lastName: req.body.lastName,
         title: req.body.title,
         email: req.body.email,
-        telephone: req.body.telephone,
+        phone: req.body.phone,
         link: req.body.link
     });
     contact
@@ -64,7 +64,7 @@ exports.patch = (req, res) => {
         'lastName',
         'title',
         'email',
-        'telephone',
+        'phone',
         'link'
     ]);
     if (!mongodb_1.ObjectID.isValid(id)) {
@@ -77,7 +77,7 @@ exports.patch = (req, res) => {
         }
         res.send({ contact });
     })
-        .catch(e => res.status(400).send());
+        .catch(e => res.status(400).send(e));
 };
 exports.fetchAll = () => {
     return contact_model_1.default.find()

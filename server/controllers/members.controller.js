@@ -75,7 +75,7 @@ exports.patch = (req, res) => {
         }
         res.send({ member });
     })
-        .catch(e => res.status(400).send());
+        .catch(e => res.status(400).send(e));
 };
 exports.fetchAll = () => {
     return member_model_1.default.find()

@@ -8,6 +8,6 @@ module.exports = {
   transform: {
     '^.+\\.(ts|tsx)$': './node_modules/ts-jest/preprocessor.js'
   },
-  testMatch: ['**/test/**/*.spec.(ts|js)'],
+  testMatch: ['**/tests/**/*.spec.(ts|js)'],
   testEnvironment: 'node'
 };

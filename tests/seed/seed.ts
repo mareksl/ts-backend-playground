@@ -61,7 +61,7 @@ export const contacts = [
     lastName: 'Moon',
     title: 'Secretary',
     email: 'andy@example.com',
-    telephone: '789456123',
+    phone: '789456123',
     link: 'https://andy.example.com'
   },
   {
