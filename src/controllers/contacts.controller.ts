@@ -2,6 +2,7 @@ import { ObjectID } from 'mongodb';
 import { Request, Response } from 'express';
 import Contact from '../models/contact.model';
 import { pick } from '../util/util';
+import { QueryFindOneAndUpdateOptions } from 'mongoose';
 
 export const post = (req: Request, res: Response) => {
   const contact = new Contact({
@@ -78,10 +79,14 @@ export const patch = (req: Request, res: Response) => {
     return res.status(404).send();
   }
 
-  Contact.findByIdAndUpdate(
-    id,
+  Contact.findOneAndUpdate(
+    { _id: id },
     { $set: body },
-    { new: true, runValidators: true }
+    <QueryFindOneAndUpdateOptions>{
+      new: true,
+      runValidators: true,
+      context: 'query'
+    }
   )
     .then(contact => {
       if (!contact) {

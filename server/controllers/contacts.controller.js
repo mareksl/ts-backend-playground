@@ -70,7 +70,11 @@ exports.patch = (req, res) => {
     if (!mongodb_1.ObjectID.isValid(id)) {
         return res.status(404).send();
     }
-    contact_model_1.default.findByIdAndUpdate(id, { $set: body }, { new: true, runValidators: true })
+    contact_model_1.default.findOneAndUpdate({ _id: id }, { $set: body }, {
+        new: true,
+        runValidators: true,
+        context: 'query'
+    })
         .then(contact => {
         if (!contact) {
             return res.status(404).send();

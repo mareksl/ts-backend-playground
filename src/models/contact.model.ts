@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import { Document, Schema, Model, model, SchemaDefinition } from 'mongoose';
 import validator from 'validator';
 
 export interface IContact extends Document {
@@ -10,8 +10,18 @@ export interface IContact extends Document {
   phone?: string;
   link?: string;
 }
+// HACK
+interface ContactSchema {
+  type: { [key: string]: any };
+  firstName?: { [key: string]: any };
+  lastName?: { [key: string]: any };
+  title?: { [key: string]: any };
+  email?: { [key: string]: any };
+  phone?: { [key: string]: any };
+  link?: { [key: string]: any };
+}
 
-const contactSchema = new mongoose.Schema({
+const contactSchema = new Schema(<SchemaDefinition & ContactSchema>{
   type: {
     type: String,
     required: true,
@@ -77,5 +87,5 @@ const contactSchema = new mongoose.Schema({
   }
 });
 
-const Contact = mongoose.model<IContact>('Contact', contactSchema);
+const Contact: Model<IContact> = model<IContact>('Contact', contactSchema);
 export default Contact;

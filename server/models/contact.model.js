@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
+const mongoose_1 = require("mongoose");
 const validator_1 = __importDefault(require("validator"));
-const contactSchema = new mongoose_1.default.Schema({
+const contactSchema = new mongoose_1.Schema({
     type: {
         type: String,
         required: true,
@@ -70,6 +70,6 @@ const contactSchema = new mongoose_1.default.Schema({
         }
     }
 });
-const Contact = mongoose_1.default.model('Contact', contactSchema);
+const Contact = mongoose_1.model('Contact', contactSchema);
 exports.default = Contact;
 //# sourceMappingURL=contact.model.js.map
