@@ -4,6 +4,7 @@ import Member, { IMember } from '../models/member.model';
 import * as eventsController from '../controllers/events.controller';
 import * as membersController from '../controllers/members.controller';
 import * as contactsController from '../controllers/contacts.controller';
+import * as galleryImageController from '../controllers/gallery-image.controller';
 
 const sortMembers = (a: IMember, b: IMember) => {
   if (a.order < b.order) {
@@ -20,6 +21,7 @@ export default async (req: Request, res: Response) => {
     const eventList = await eventsController.fetchAll();
     const memberList = await membersController.fetchAll();
     const contactList = await contactsController.fetchAll();
+    const galleryImageList = await galleryImageController.fetchAll();
     let sortedMembers = [];
     if (memberList) {
       sortedMembers = memberList.sort(sortMembers);
@@ -27,7 +29,8 @@ export default async (req: Request, res: Response) => {
         title: 'BAND',
         eventList,
         memberList: sortedMembers,
-        contactList
+        contactList,
+        galleryImageList
       });
     }
   } catch (e) {

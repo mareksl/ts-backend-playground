@@ -48,6 +48,11 @@ app.delete('/contacts/:id', contactsController.deleteById);
 app.patch('/contacts/:id', contactsController.patch);
 
 // Gallery Images routes
+app.get('/gallery', galleryImageController.get);
+app.get('/gallery/:id', galleryImageController.getById);
 app.post('/gallery', upload.image, galleryImageController.post);
+app.delete('/gallery/:id', galleryImageController.deleteById);
+app.patch('/gallery/:id', galleryImageController.patch);
+
 
 export default app;

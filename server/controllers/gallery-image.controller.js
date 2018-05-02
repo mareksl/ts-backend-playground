@@ -3,9 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongodb_1 = require("mongodb");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const gallery_image_model_1 = __importDefault(require("../models/gallery-image.model"));
+const util_1 = require("../util/util");
 const galleryDirectory = path_1.default.join(__dirname, '..', '..', 'public', 'img', 'gallery');
 const jimp_1 = __importDefault(require("jimp"));
 exports.post = (req, res) => {
@@ -38,5 +40,64 @@ exports.post = (req, res) => {
         galleryImage.save().then(galleryImage => res.send(galleryImage));
     })
         .catch(err => res.status(500).send(err));
+};
+exports.get = (req, res) => {
+    gallery_image_model_1.default.find()
+        .then(images => {
+        res.send({ images });
+    })
+        .catch(e => {
+        res.status(400).send(e);
+    });
+};
+exports.getById = (req, res) => {
+    const id = req.params.id;
+    if (!mongodb_1.ObjectID.isValid(id)) {
+        return res.status(404).send();
+    }
+    gallery_image_model_1.default.findById(id)
+        .then(image => {
+        if (!image) {
+            return res.status(404).send();
+        }
+        res.send({ image });
+    })
+        .catch(e => res.status(400).send(e));
+};
+exports.deleteById = (req, res) => {
+    const id = req.params.id;
+    if (!mongodb_1.ObjectID.isValid(id)) {
+        return res.status(404).send();
+    }
+    gallery_image_model_1.default.findByIdAndRemove(id)
+        .then(image => {
+        if (!image) {
+            return res.status(404).send();
+        }
+        const filePath = path_1.default.join(galleryDirectory, image.filename);
+        return fs_1.default.unlink(filePath, err => {
+            if (err)
+                return res.status(500).send(err);
+            res.send('File successfully removed');
+        });
+    })
+        .catch(e => res.status(400).send(e));
+};
+exports.patch = (req, res) => {
+    const id = req.params.id;
+    const body = util_1.pick(req.body, ['title']);
+    if (!mongodb_1.ObjectID.isValid(id)) {
+        return res.status(404).send();
+    }
+    gallery_image_model_1.default.findByIdAndUpdate(id, {
+        $set: body
+    }, { new: true, runValidators: true })
+        .then(image => {
+        if (!image) {
+            res.status(404).send();
+        }
+        res.send({ image });
+    })
+        .catch(e => res.status(400).send(e));
 };
 //# sourceMappingURL=gallery-image.controller.js.map
