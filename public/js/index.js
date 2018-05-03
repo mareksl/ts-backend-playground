@@ -137,4 +137,13 @@
   };
   window.addEventListener('scroll', scrollThrottler);
   toggleNarrowHeader();
+
+  // Masonry
+  const elem = document.querySelector('.gallery');
+  const masonry = new Masonry(elem, {
+    // options
+    itemSelector: '.gallery__wrapper',
+    columnWidth: '.gallery__wrapper',
+    percentPosition: true
+  });
 })();

@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const eventsController = __importStar(require("../controllers/events.controller"));
 const membersController = __importStar(require("../controllers/members.controller"));
 const contactsController = __importStar(require("../controllers/contacts.controller"));
+const galleryImageController = __importStar(require("../controllers/gallery-image.controller"));
 const sortMembers = (a, b) => {
     if (a.order < b.order) {
         return -1;
@@ -32,6 +33,7 @@ exports.default = (req, res) => __awaiter(this, void 0, void 0, function* () {
         const eventList = yield eventsController.fetchAll();
         const memberList = yield membersController.fetchAll();
         const contactList = yield contactsController.fetchAll();
+        const galleryImageList = yield galleryImageController.fetchAll();
         let sortedMembers = [];
         if (memberList) {
             sortedMembers = memberList.sort(sortMembers);
@@ -39,7 +41,8 @@ exports.default = (req, res) => __awaiter(this, void 0, void 0, function* () {
                 title: 'BAND',
                 eventList,
                 memberList: sortedMembers,
-                contactList
+                contactList,
+                galleryImageList
             });
         }
     }

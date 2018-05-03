@@ -25,6 +25,9 @@
                     <a class="menu-item__link link" href="#about">About</a>
                 </li>
                 <li class="nav-menu__item">
+                    <a class="menu-item__link link" href="#gallery">Gallery</a>
+                </li>
+                <li class="nav-menu__item">
                     <a class="menu-item__link link" href="#events">Events</a>
                 </li>
                 <li class="nav-menu__item">
@@ -56,6 +59,15 @@
                 {{/each}}
             </ul>
         </section>
+        <section id="gallery" class="content-section gallery-section">
+            <div class="gallery">
+                {{#each galleryImageList}}
+                <a href="img/gallery/{{filename}}" class="gallery__wrapper">
+                    <img class="gallery__image" src="img/gallery/{{filename}}" alt="{{title}}">
+                </a>
+                {{/each}}
+            </div>
+        </section>
         <section id="events" class="content-section">
             <h2>Events</h2>
             <ul class="event-list">
@@ -70,11 +82,9 @@
                 {{/each}}
             </ul>
         </section>
-
         <section id="contact" class="content-section">
             <h2>Contact</h2>
             <ul class="contacts-list">
-
                 {{#each contactList}}
                 <li class="contacts-list__item">
                     <p class="contact-title">
@@ -91,8 +101,7 @@
                         <img class="icon contact-icon" src="img/icons/mail.svg" alt="">
                         <span>{{email}}</span>
                     </p>
-                    {{/if}}
-                    {{#if phone}}
+                    {{/if}} {{#if phone}}
                     <p class="contact__phone">
                         <img class="icon contact-icon" src="img/icons/call.svg" alt="">
                         <span>{{phone}}</span>
@@ -111,6 +120,7 @@
     <footer class="site-footer">
         <small>&copy; Marek Sładczyk 2018</small>
     </footer>
+    <script src="js/masonry.pkgd.min.js"></script>
     <script src="js/index.js"></script>
 </body>
 
