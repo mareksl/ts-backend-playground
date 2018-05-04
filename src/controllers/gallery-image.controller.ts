@@ -44,7 +44,7 @@ export const post = (req: Request, res: Response) => {
         filename: fileName,
         title: req.body.title
       });
-      galleryImage.save().then(galleryImage => res.send(galleryImage));
+      galleryImage.save().then(image => res.send({ image }));
     })
     .catch(err => res.status(500).send(err));
 };
@@ -89,7 +89,7 @@ export const deleteById = (req: Request, res: Response) => {
       const filePath = path.join(galleryDirectory, image.filename);
       return fs.unlink(filePath, err => {
         if (err) return res.status(500).send(err);
-        res.send('File successfully removed');
+        res.send({ image });
       });
     })
     .catch(e => res.status(400).send(e));

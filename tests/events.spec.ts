@@ -29,15 +29,15 @@ describe('/events', () => {
         })
         .end((err, res) => {
           Event.find(event)
-            .then(todos => {
+            .then(events => {
               if (err) {
                 return done(err);
               }
-              expect(todos.length).toBe(1);
-              expect(todos[0].location).toEqual(event.location);
-              expect(todos[0].date).toEqual(event.date);
-              expect(todos[0].description).toEqual(event.description);
-              expect(todos[0].link).toEqual(event.link);
+              expect(events.length).toBe(1);
+              expect(events[0].location).toEqual(event.location);
+              expect(events[0].date).toEqual(event.date);
+              expect(events[0].description).toEqual(event.description);
+              expect(events[0].link).toEqual(event.link);
               done();
             })
             .catch(e => done(e));

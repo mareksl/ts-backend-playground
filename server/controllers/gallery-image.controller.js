@@ -37,7 +37,7 @@ exports.post = (req, res) => {
             filename: fileName,
             title: req.body.title
         });
-        galleryImage.save().then(galleryImage => res.send(galleryImage));
+        galleryImage.save().then(image => res.send({ image }));
     })
         .catch(err => res.status(500).send(err));
 };
@@ -78,7 +78,7 @@ exports.deleteById = (req, res) => {
         return fs_1.default.unlink(filePath, err => {
             if (err)
                 return res.status(500).send(err);
-            res.send('File successfully removed');
+            res.send({ image });
         });
     })
         .catch(e => res.status(400).send(e));

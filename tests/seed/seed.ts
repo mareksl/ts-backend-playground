@@ -2,6 +2,9 @@ import { ObjectID } from 'mongodb';
 import Event from '../../src/models/event.model';
 import Member from '../../src/models/member.model';
 import Contact from '../../src/models/contact.model';
+import GalleryImage from '../../src/models/gallery-image.model';
+import rimraf from 'rimraf';
+import fs from 'fs';
 
 export const events = [
   {
@@ -78,4 +81,40 @@ export const populateContacts = done => {
       return Contact.insertMany(contacts);
     })
     .then(() => done());
+};
+
+export const galleryImages = [
+  {
+    _id: new ObjectID(),
+    filename: 'test1.jpg',
+    title: 'Test image 1'
+  },
+  {
+    _id: new ObjectID(),
+    filename: 'test2.png',
+    title: 'Test image 2'
+  }
+];
+
+export const populateGalleryImages = done => {
+  GalleryImage.remove({})
+    .then(() => {
+      return GalleryImage.insertMany(galleryImages);
+    })
+    .then(() => done());
+};
+
+export const copySeedImage = done => {
+  const stream = fs
+    .createReadStream('./tests/seed/files/test1.png')
+    .pipe(
+      fs.createWriteStream(
+        './public/img/gallery/test2.png'
+      )
+    );
+  stream.on('finish', done);
+};
+
+export const deleteGalleryImages = done => {
+  rimraf('./public/img/gallery/*', done);
 };
