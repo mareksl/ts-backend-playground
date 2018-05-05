@@ -5,7 +5,8 @@ import { ObjectID } from 'mongodb';
 
 import Event from '../src/models/event.model';
 
-import { events, populateEvents } from './seed/seed';
+import { events, populateEvents, users, populateUsers } from './seed/seed';
+beforeEach(populateUsers);
 beforeEach(populateEvents);
 
 describe('/events', () => {
@@ -19,6 +20,7 @@ describe('/events', () => {
       };
       request(app)
         .post('/events')
+        .set('x-auth', users[0].tokens[0].token)
         .send(event)
         .expect(200)
         .expect(res => {
@@ -53,6 +55,7 @@ describe('/events', () => {
       };
       request(app)
         .post('/events')
+        .set('x-auth', users[0].tokens[0].token)
         .send(event)
         .expect(400)
         .end((err, res) => {
@@ -117,6 +120,7 @@ describe('/events', () => {
 
       request(app)
         .delete(`/events/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(200)
         .expect(res => {
           expect(res.body.event._id).toBe(id);
@@ -138,6 +142,7 @@ describe('/events', () => {
       const id = new ObjectID().toHexString();
       request(app)
         .delete(`/events/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(404)
         .end(done);
     });
@@ -146,6 +151,7 @@ describe('/events', () => {
       const id = 123;
       request(app)
         .delete(`/events/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(404)
         .end(done);
     });
@@ -158,6 +164,7 @@ describe('/events', () => {
 
       request(app)
         .patch(`/events/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .send(body)
         .expect(200)
         .expect(res => {

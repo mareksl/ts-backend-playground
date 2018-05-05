@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function pick(object, properties) {
-    return properties.reduce((acc, prop) => {
-        if (object[prop]) {
-            acc[prop] = object[prop];
+function pick(obj, keys) {
+    const ret = {};
+    keys.forEach(key => {
+        if (obj[key]) {
+            ret[key] = obj[key];
         }
-        return acc;
-    }, {});
+    });
+    return ret;
 }
 exports.pick = pick;
 //# sourceMappingURL=util.js.map

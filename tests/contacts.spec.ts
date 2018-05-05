@@ -5,7 +5,8 @@ import { ObjectID } from 'mongodb';
 
 import Contact from '../src/models/contact.model';
 
-import { contacts, populateContacts } from './seed/seed';
+import { contacts, populateContacts, users, populateUsers } from './seed/seed';
+beforeEach(populateUsers);
 beforeEach(populateContacts);
 
 describe('/contacts', () => {
@@ -23,6 +24,7 @@ describe('/contacts', () => {
 
       request(app)
         .post('/contacts')
+        .set('x-auth', users[0].tokens[0].token)
         .send(contactInput)
         .expect(200)
         .expect(res => {
@@ -51,6 +53,7 @@ describe('/contacts', () => {
 
       request(app)
         .post('/contacts')
+        .set('x-auth', users[0].tokens[0].token)
         .send(contactInput)
         .expect(200)
         .expect(res => {
@@ -75,6 +78,7 @@ describe('/contacts', () => {
 
       request(app)
         .post('/contacts')
+        .set('x-auth', users[0].tokens[0].token)
         .send(contact)
         .expect(400)
         .end((err, res) => {
@@ -143,6 +147,7 @@ describe('/contacts', () => {
 
       request(app)
         .delete(`/contacts/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(200)
         .expect(res => {
           expect(res.body.contact._id).toBe(id);
@@ -166,6 +171,7 @@ describe('/contacts', () => {
 
       request(app)
         .delete(`/contacts/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(404)
         .end(done);
     });
@@ -175,6 +181,7 @@ describe('/contacts', () => {
 
       request(app)
         .delete(`/contacts/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(404)
         .end(done);
     });
@@ -187,6 +194,7 @@ describe('/contacts', () => {
 
       request(app)
         .patch(`/contacts/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .send(body)
         .expect(200)
         .expect(res => {

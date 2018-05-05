@@ -1,12 +1,9 @@
-// TODO annotate this
-interface PickObject<T> {
-  [key: string]: T;
-}
-export function pick<U>(object: PickObject<U>, properties: string[]) {
-  return properties.reduce((acc: PickObject<U>, prop: string) => {
-    if (object[prop]) {
-      acc[prop] = object[prop];
+export function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
+  const ret: any = {};
+  keys.forEach(key => {
+    if (obj[key]) {
+      ret[key] = obj[key];
     }
-    return acc;
-  }, {});
+  });
+  return ret;
 }

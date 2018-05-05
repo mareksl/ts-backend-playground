@@ -22,6 +22,8 @@ const membersController = __importStar(require("./controllers/members.controller
 const contactsController = __importStar(require("./controllers/contacts.controller"));
 const staticController = __importStar(require("./controllers/static.controller"));
 const galleryImageController = __importStar(require("./controllers/gallery-image.controller"));
+const usersController = __importStar(require("./controllers/users.controller"));
+const authenticate_1 = require("./middleware/authenticate");
 const app = express_1.default();
 const staticDirectory = path_1.default.join(__dirname, '..', 'public');
 app.use(body_parser_1.default.json());
@@ -30,26 +32,31 @@ app.get('/', staticController.default);
 // Events routes
 app.get('/events', eventsController.get);
 app.get('/events/:id', eventsController.getById);
-app.post('/events', eventsController.post);
-app.delete('/events/:id', eventsController.deleteById);
-app.patch('/events/:id', eventsController.patch);
+app.post('/events', authenticate_1.authenticate, eventsController.post);
+app.delete('/events/:id', authenticate_1.authenticate, eventsController.deleteById);
+app.patch('/events/:id', authenticate_1.authenticate, eventsController.patch);
 // Members routes
 app.get('/members', membersController.get);
 app.get('/members/:id', membersController.getById);
-app.post('/members', membersController.post);
-app.delete('/members/:id', membersController.deleteById);
-app.patch('/members/:id', membersController.patch);
+app.post('/members', authenticate_1.authenticate, membersController.post);
+app.delete('/members/:id', authenticate_1.authenticate, membersController.deleteById);
+app.patch('/members/:id', authenticate_1.authenticate, membersController.patch);
 // Contacts routes
 app.get('/contacts', contactsController.get);
 app.get('/contacts/:id', contactsController.getById);
-app.post('/contacts', contactsController.post);
-app.delete('/contacts/:id', contactsController.deleteById);
-app.patch('/contacts/:id', contactsController.patch);
+app.post('/contacts', authenticate_1.authenticate, contactsController.post);
+app.delete('/contacts/:id', authenticate_1.authenticate, contactsController.deleteById);
+app.patch('/contacts/:id', authenticate_1.authenticate, contactsController.patch);
 // Gallery Images routes
 app.get('/gallery', galleryImageController.get);
 app.get('/gallery/:id', galleryImageController.getById);
-app.post('/gallery', upload.image, galleryImageController.post);
-app.delete('/gallery/:id', galleryImageController.deleteById);
-app.patch('/gallery/:id', galleryImageController.patch);
+app.post('/gallery', authenticate_1.authenticate, upload.image, galleryImageController.post);
+app.delete('/gallery/:id', authenticate_1.authenticate, galleryImageController.deleteById);
+app.patch('/gallery/:id', authenticate_1.authenticate, galleryImageController.patch);
+// Users routes
+app.post('/users', usersController.post);
+app.get('/users/me', authenticate_1.authenticate, usersController.get);
+app.post('/users/login', usersController.login);
+app.delete('/users/me', authenticate_1.authenticate, usersController.logout);
 exports.default = app;
 //# sourceMappingURL=app.js.map

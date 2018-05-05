@@ -10,9 +10,12 @@ import {
   galleryImages,
   populateGalleryImages,
   deleteGalleryImages,
-  copySeedImage
+  copySeedImage,
+  users,
+  populateUsers
 } from './seed/seed';
 
+beforeEach(populateUsers);
 beforeEach(populateGalleryImages);
 
 beforeAll(copySeedImage);
@@ -28,14 +31,13 @@ describe('/gallery', () => {
 
       request(app)
         .post('/gallery')
+        .set('x-auth', users[0].tokens[0].token)
         .field('title', image.title)
         .attach('image', './tests/seed/files/test1.png')
         .expect(200)
         .expect(res => {
           expect(res.body.image.title).toEqual(image.title);
-          expect(res.body.image.filename).toMatch(
-            /^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/
-          );
+          expect(res.body.image.filename).toMatch(/^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/);
         })
         .end((err, res) => {
           if (err) {
@@ -45,9 +47,7 @@ describe('/gallery', () => {
             .then(images => {
               expect(images.length).toBe(1);
               expect(images[0].title).toEqual(image.title);
-              expect(images[0].filename).toMatch(
-                /^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/
-              );
+              expect(images[0].filename).toMatch(/^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/);
               if (fs.existsSync(`./public/img/gallery/${images[0].filename}`)) {
                 done();
               } else {
@@ -64,6 +64,7 @@ describe('/gallery', () => {
 
       request(app)
         .post('/gallery')
+        .set('x-auth', users[0].tokens[0].token)
         .field('title', image.title)
         .attach('image', './tests/seed/files/test1.txt')
         .expect(400)
@@ -129,6 +130,7 @@ describe('/gallery', () => {
 
       request(app)
         .delete(`/gallery/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(200)
         .expect(res => {
           expect(res.body.image._id).toBe(id);
@@ -150,6 +152,7 @@ describe('/gallery', () => {
       const id = new ObjectID().toHexString();
       request(app)
         .delete(`/gallery/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(404)
         .end(done);
     });
@@ -158,6 +161,7 @@ describe('/gallery', () => {
       const id = 123;
       request(app)
         .delete(`/gallery/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .expect(404)
         .end(done);
     });
@@ -170,6 +174,7 @@ describe('/gallery', () => {
 
       request(app)
         .patch(`/gallery/${id}`)
+        .set('x-auth', users[0].tokens[0].token)
         .send(body)
         .expect(200)
         .expect(res => {

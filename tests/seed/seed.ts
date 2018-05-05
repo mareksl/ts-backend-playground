@@ -3,8 +3,10 @@ import Event from '../../src/models/event.model';
 import Member from '../../src/models/member.model';
 import Contact from '../../src/models/contact.model';
 import GalleryImage from '../../src/models/gallery-image.model';
+import User from '../../src/models/user.model';
 import rimraf from 'rimraf';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
 
 export const events = [
   {
@@ -107,14 +109,55 @@ export const populateGalleryImages = done => {
 export const copySeedImage = done => {
   const stream = fs
     .createReadStream('./tests/seed/files/test1.png')
-    .pipe(
-      fs.createWriteStream(
-        './public/img/gallery/test2.png'
-      )
-    );
+    .pipe(fs.createWriteStream('./public/img/gallery/test2.png'));
   stream.on('finish', done);
 };
 
 export const deleteGalleryImages = done => {
   rimraf('./public/img/gallery/*', done);
+};
+
+const userOneId = new ObjectID();
+const userTwoId = new ObjectID();
+
+export const users = [
+  {
+    _id: userOneId,
+    email: 'andrew@example.com',
+    password: 'userOnePass',
+    username: 'userOne',
+    tokens: [
+      {
+        access: 'auth',
+        token: jwt
+          .sign({ _id: userOneId, access: 'auth' }, process.env.JWT_SECRET)
+          .toString()
+      }
+    ]
+  },
+  {
+    _id: userTwoId,
+    email: 'john@example.com',
+    password: 'userTwoPass',
+    username: 'userTwo',
+    tokens: [
+      {
+        access: 'auth',
+        token: jwt
+          .sign({ _id: userTwoId, access: 'auth' }, process.env.JWT_SECRET)
+          .toString()
+      }
+    ]
+  }
+];
+
+export const populateUsers = done => {
+  User.remove({})
+    .then(() => {
+      const userOne = new User(users[0]).save();
+      const userTwo = new User(users[1]).save();
+
+      return Promise.all([userOne, userTwo]);
+    })
+    .then(() => done());
 };
