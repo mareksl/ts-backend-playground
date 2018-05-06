@@ -55,8 +55,9 @@ app.delete('/gallery/:id', authenticate_1.authenticate, galleryImageController.d
 app.patch('/gallery/:id', authenticate_1.authenticate, galleryImageController.patch);
 // Users routes
 app.post('/users', usersController.post);
-app.get('/users/me', authenticate_1.authenticate, usersController.get);
 app.post('/users/login', usersController.login);
+app.get('/users/me', authenticate_1.authenticate, usersController.get);
 app.delete('/users/me', authenticate_1.authenticate, usersController.logout);
+app.patch('/users/me', authenticate_1.authenticate, usersController.patch);
 exports.default = app;
 //# sourceMappingURL=app.js.map

@@ -39,4 +39,21 @@ exports.logout = (req, res) => {
         .then(() => res.status(200).send())
         .catch(e => res.status(400).send());
 };
+exports.patch = (req, res) => {
+    const body = util_1.pick(req.body, ['email', 'password']);
+    if (!req.user) {
+        return res.status(400).send();
+    }
+    const id = req.user._id;
+    user_model_1.default.findByIdAndUpdate(id, {
+        $set: body
+    }, { new: true, runValidators: true })
+        .then(user => {
+        if (!user) {
+            return res.status(400).send();
+        }
+        res.send({ user });
+    })
+        .catch(e => res.status(400).send(e));
+};
 //# sourceMappingURL=users.controller.js.map

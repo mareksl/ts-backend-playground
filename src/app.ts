@@ -59,8 +59,9 @@ app.patch('/gallery/:id', authenticate, galleryImageController.patch);
 
 // Users routes
 app.post('/users', usersController.post);
-app.get('/users/me', authenticate, usersController.get);
 app.post('/users/login', usersController.login);
+app.get('/users/me', authenticate, usersController.get);
 app.delete('/users/me', authenticate, usersController.logout);
+app.patch('/users/me', authenticate, usersController.patch);
 
 export default app;

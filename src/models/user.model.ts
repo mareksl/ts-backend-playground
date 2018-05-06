@@ -1,4 +1,4 @@
-import { Document, Schema, Model, model, DocumentQuery } from 'mongoose';
+import { Document, Schema, Model, model, DocumentQuery, Query } from 'mongoose';
 import validator from 'validator';
 import { IMember } from './member.model';
 import jwt from 'jsonwebtoken';
@@ -167,6 +167,25 @@ userSchema.pre('save', function(next) {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
         user.password = hash;
+        next();
+      });
+    });
+  } else {
+    next();
+  }
+});
+
+userSchema.pre('findOneAndUpdate', function(next) {
+  const query: Query<IUserDocument> = this;
+
+  const update = query.getUpdate();
+
+  if (update.$set.password) {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(update.$set.password, salt, (err, hash) => {
+        update.$set.password = hash;
+
+        query.findOneAndUpdate({}, update);
         next();
       });
     });

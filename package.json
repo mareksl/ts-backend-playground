@@ -44,6 +44,6 @@
     "compile": "yarn build && yarn serve",
     "dev": "nodemon --watch src/ -e ts --exec \"yarn compile\"",
     "lint": "tslint --project tsconfig.json",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest --runInBand"
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest --runInBand --verbose"
   }
 }

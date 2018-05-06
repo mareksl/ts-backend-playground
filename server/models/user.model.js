@@ -133,6 +133,22 @@ userSchema.pre('save', function (next) {
         next();
     }
 });
+userSchema.pre('findOneAndUpdate', function (next) {
+    const query = this;
+    const update = query.getUpdate();
+    if (update.$set.password) {
+        bcryptjs_1.default.genSalt(10, (err, salt) => {
+            bcryptjs_1.default.hash(update.$set.password, salt, (err, hash) => {
+                update.$set.password = hash;
+                query.findOneAndUpdate({}, update);
+                next();
+            });
+        });
+    }
+    else {
+        next();
+    }
+});
 const User = mongoose_1.model('User', userSchema);
 exports.default = User;
 //# sourceMappingURL=user.model.js.map
