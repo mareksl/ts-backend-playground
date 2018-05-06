@@ -13,7 +13,8 @@ export const post = (req: Request, res: Response) => {
     .then(() => user.generateAuthToken())
     .then(token => {
       res.header('x-auth', token).send(user);
-    });
+    })
+    .catch(e => res.status(400).send(e));
 };
 
 export const get = (req: UserRequest, res: Response) => {

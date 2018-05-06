@@ -61,7 +61,7 @@ app.patch('/gallery/:id', authenticate, galleryImageController.patch);
 app.post('/users', usersController.post);
 app.post('/users/login', usersController.login);
 app.get('/users/me', authenticate, usersController.get);
-app.delete('/users/me', authenticate, usersController.logout);
 app.patch('/users/me', authenticate, usersController.patch);
+app.delete('/users/me/token', authenticate, usersController.logout);
 
 export default app;
