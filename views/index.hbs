@@ -60,10 +60,11 @@
             </ul>
         </section>
         <section id="gallery" class="content-section gallery-section">
+            <h2>Gallery</h2>
             <div class="gallery">
                 {{#each galleryImageList}}
-                <a href="img/gallery/{{filename}}" class="gallery__wrapper">
-                    <img class="gallery__image" src="img/gallery/{{filename}}" alt="{{title}}">
+                <a href="gallery/{{_id}}" class="gallery__wrapper">
+                    <img class="gallery__image" src="gallery/{{_id}}" alt="{{title}}">
                 </a>
                 {{/each}}
             </div>
@@ -82,6 +83,7 @@
                 {{/each}}
             </ul>
         </section>
+
         <section id="contact" class="content-section">
             <h2>Contact</h2>
             <ul class="contacts-list">
