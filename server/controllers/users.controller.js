@@ -13,7 +13,8 @@ exports.post = (req, res) => {
         .then(() => user.generateAuthToken())
         .then(token => {
         res.header('x-auth', token).send(user);
-    });
+    })
+        .catch(e => res.status(400).send(e));
 };
 exports.get = (req, res) => {
     res.send(req.user);

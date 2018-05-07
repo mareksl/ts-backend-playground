@@ -93,7 +93,7 @@ export const galleryImages = [
   },
   {
     _id: new ObjectID(),
-    filename: 'test2.png',
+    filename: 'test1.png',
     title: 'Test image 2'
   }
 ];
@@ -109,7 +109,7 @@ export const populateGalleryImages = done => {
 export const copySeedImage = done => {
   const stream = fs
     .createReadStream('./tests/seed/files/test1.png')
-    .pipe(fs.createWriteStream('./public/img/gallery/test2.png'));
+    .pipe(fs.createWriteStream('./public/img/gallery/test1.png'));
   stream.on('finish', done);
 };
 

@@ -26,7 +26,7 @@ describe('/gallery', () => {
   describe('POST /gallery', () => {
     it('should upload new image', done => {
       const image = {
-        title: 'Test image'
+        title: 'Test image 3'
       };
 
       request(app)
@@ -37,7 +37,9 @@ describe('/gallery', () => {
         .expect(200)
         .expect(res => {
           expect(res.body.image.title).toEqual(image.title);
-          expect(res.body.image.filename).toMatch(/^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/);
+          expect(res.body.image.filename).toMatch(
+            /^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/
+          );
         })
         .end((err, res) => {
           if (err) {
@@ -47,7 +49,9 @@ describe('/gallery', () => {
             .then(images => {
               expect(images.length).toBe(1);
               expect(images[0].title).toEqual(image.title);
-              expect(images[0].filename).toMatch(/^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/);
+              expect(images[0].filename).toMatch(
+                /^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/
+              );
               if (fs.existsSync(`./public/img/gallery/${images[0].filename}`)) {
                 done();
               } else {
@@ -98,13 +102,9 @@ describe('/gallery', () => {
   describe('GET /gallery/:id', () => {
     it('should return image by id', done => {
       request(app)
-        .get(`/gallery/${galleryImages[0]._id.toHexString()}`)
-        .expect(200)
-        .expect(res => {
-          expect(res.body.image.title).toBe(galleryImages[0].title);
-          done();
-        })
-        .catch(e => done(e));
+        .get(`/gallery/${galleryImages[1]._id.toHexString()}`)
+        .expect('Content-Type', /image\/(jpe?g|bmp|png)/)
+        .expect(200, done)
     });
 
     it('should return 404 if image not found', done => {

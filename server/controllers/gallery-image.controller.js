@@ -60,7 +60,7 @@ exports.getById = (req, res) => {
         if (!image) {
             return res.status(404).send();
         }
-        res.send({ image });
+        res.sendFile(path_1.default.join(galleryDirectory, image.filename));
     })
         .catch(e => res.status(400).send(e));
 };

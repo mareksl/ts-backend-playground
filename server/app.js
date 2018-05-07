@@ -57,7 +57,7 @@ app.patch('/gallery/:id', authenticate_1.authenticate, galleryImageController.pa
 app.post('/users', usersController.post);
 app.post('/users/login', usersController.login);
 app.get('/users/me', authenticate_1.authenticate, usersController.get);
-app.delete('/users/me', authenticate_1.authenticate, usersController.logout);
 app.patch('/users/me', authenticate_1.authenticate, usersController.patch);
+app.delete('/users/me/token', authenticate_1.authenticate, usersController.logout);
 exports.default = app;
 //# sourceMappingURL=app.js.map
