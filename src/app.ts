@@ -1,17 +1,14 @@
 import express from 'express';
-import path from 'path';
 import bodyParser from 'body-parser';
 
 import './config/config';
 import './db/mongoose';
-import './util/helpers';
 
 import * as upload from './middleware/upload';
 
 import * as eventsController from './controllers/events.controller';
 import * as membersController from './controllers/members.controller';
 import * as contactsController from './controllers/contacts.controller';
-import * as staticController from './controllers/static.controller';
 import * as galleryImageController from './controllers/gallery-image.controller';
 import * as usersController from './controllers/users.controller';
 
@@ -19,12 +16,7 @@ import { authenticate } from './middleware/authenticate';
 
 const app = express();
 
-const staticDirectory = path.join(__dirname, '..', 'public');
-
 app.use(bodyParser.json());
-app.use(express.static(staticDirectory));
-
-app.get('/', staticController.default);
 
 // Events routes
 

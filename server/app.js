@@ -11,24 +11,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const path_1 = __importDefault(require("path"));
 const body_parser_1 = __importDefault(require("body-parser"));
 require("./config/config");
 require("./db/mongoose");
-require("./util/helpers");
 const upload = __importStar(require("./middleware/upload"));
 const eventsController = __importStar(require("./controllers/events.controller"));
 const membersController = __importStar(require("./controllers/members.controller"));
 const contactsController = __importStar(require("./controllers/contacts.controller"));
-const staticController = __importStar(require("./controllers/static.controller"));
 const galleryImageController = __importStar(require("./controllers/gallery-image.controller"));
 const usersController = __importStar(require("./controllers/users.controller"));
 const authenticate_1 = require("./middleware/authenticate");
 const app = express_1.default();
-const staticDirectory = path_1.default.join(__dirname, '..', 'public');
 app.use(body_parser_1.default.json());
-app.use(express_1.default.static(staticDirectory));
-app.get('/', staticController.default);
 // Events routes
 app.get('/events', eventsController.get);
 app.get('/events/:id', eventsController.getById);
