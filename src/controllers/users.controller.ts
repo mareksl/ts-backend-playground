@@ -63,7 +63,7 @@ export const patch = (req: UserRequest, res: Response) => {
       if (!user) {
         return res.status(400).send();
       }
-      res.send({ user });
+      res.send(user);
     })
     .catch(e => res.status(400).send(e));
 };

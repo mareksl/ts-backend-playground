@@ -53,7 +53,7 @@ exports.patch = (req, res) => {
         if (!user) {
             return res.status(400).send();
         }
-        res.send({ user });
+        res.send(user);
     })
         .catch(e => res.status(400).send(e));
 };

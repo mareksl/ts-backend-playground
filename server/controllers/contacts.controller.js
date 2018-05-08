@@ -83,11 +83,4 @@ exports.patch = (req, res) => {
     })
         .catch(e => res.status(400).send(e));
 };
-exports.fetchAll = () => {
-    return contact_model_1.default.find()
-        .then(contacts => contacts)
-        .catch(e => {
-        console.log(e);
-    });
-};
 //# sourceMappingURL=contacts.controller.js.map

@@ -72,11 +72,4 @@ exports.patch = (req, res) => {
     })
         .catch(e => res.status(400).send(e));
 };
-exports.fetchAll = () => {
-    return event_model_1.default.find()
-        .then(events => events)
-        .catch(e => {
-        console.log(e);
-    });
-};
 //# sourceMappingURL=events.controller.js.map

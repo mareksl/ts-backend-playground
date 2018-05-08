@@ -77,11 +77,4 @@ exports.patch = (req, res) => {
     })
         .catch(e => res.status(400).send(e));
 };
-exports.fetchAll = () => {
-    return member_model_1.default.find()
-        .then(members => members)
-        .catch(e => {
-        console.log(e);
-    });
-};
 //# sourceMappingURL=members.controller.js.map

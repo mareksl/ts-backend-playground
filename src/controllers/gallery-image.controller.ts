@@ -118,11 +118,3 @@ export const patch = (req: Request, res: Response) => {
     })
     .catch(e => res.status(400).send(e));
 };
-
-export const fetchAll = () => {
-  return GalleryImage.find()
-    .then(images => images)
-    .catch(e => {
-      console.log(e);
-    });
-};

@@ -117,7 +117,10 @@ describe('/users', () => {
     it('should reject invalid login', done => {
       request(app)
         .post('/users/login')
-        .send({ username: users[1].username, password: users[1].password + '1' })
+        .send({
+          username: users[1].username,
+          password: users[1].password + '1'
+        })
         .expect(400)
         .expect(res => {
           expect(res.headers['x-auth']).toBeFalsy();
@@ -137,25 +140,52 @@ describe('/users', () => {
     });
   });
 
-describe('DELETE /users/me/token', () => {
-  it('should remove auth token on logout', done => {
-    request(app)
-      .delete('/users/me/token')
-      .set('x-auth', users[0].tokens[0].token)
-      .expect(200)
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
+  describe('DELETE /users/me/token', () => {
+    it('should remove auth token on logout', done => {
+      request(app)
+        .delete('/users/me/token')
+        .set('x-auth', users[0].tokens[0].token)
+        .expect(200)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
 
-        User.findById(users[0]._id)
-          .then(user => {
-            expect(user.tokens.length).toBe(0);
-            done();
-          })
-          .catch(e => done(e));
-      });
+          User.findById(users[0]._id)
+            .then(user => {
+              expect(user.tokens.length).toBe(0);
+              done();
+            })
+            .catch(e => done(e));
+        });
+    });
   });
-});
 
+  describe('PATCH /users/me', () => {
+    it('should update user data', done => {
+      const email = 'patch@example.com';
+
+      request(app)
+        .patch('/users/me')
+        .set('x-auth', users[0].tokens[0].token)
+        .send({ email })
+        .expect(200)
+        .expect(res => {
+          expect(res.body.email).toBe(email);
+        })
+        .end(err => {
+          if (err) {
+            return done(err);
+          }
+
+          User.findOne({ email })
+            .then(user => {
+              expect(user).toBeTruthy();
+              expect(user.email).toBe(email);
+              done();
+            })
+            .catch(e => done(e));
+        });
+    });
+  });
 });

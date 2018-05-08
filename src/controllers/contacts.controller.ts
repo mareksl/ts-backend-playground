@@ -96,11 +96,3 @@ export const patch = (req: Request, res: Response) => {
     })
     .catch(e => res.status(400).send(e));
 };
-
-export const fetchAll = () => {
-  return Contact.find()
-    .then(contacts => contacts)
-    .catch(e => {
-      console.log(e);
-    });
-};

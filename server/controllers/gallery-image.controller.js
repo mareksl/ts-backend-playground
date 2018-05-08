@@ -100,11 +100,4 @@ exports.patch = (req, res) => {
     })
         .catch(e => res.status(400).send(e));
 };
-exports.fetchAll = () => {
-    return gallery_image_model_1.default.find()
-        .then(images => images)
-        .catch(e => {
-        console.log(e);
-    });
-};
 //# sourceMappingURL=gallery-image.controller.js.map

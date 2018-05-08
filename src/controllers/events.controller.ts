@@ -82,11 +82,3 @@ export const patch = (req: Request, res: Response) => {
     })
     .catch(e => res.status(400).send(e));
 };
-
-export const fetchAll = () => {
-  return Event.find()
-    .then(events => events)
-    .catch(e => {
-      console.log(e);
-    });
-};
