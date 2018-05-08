@@ -52,7 +52,7 @@ describe('/gallery', () => {
               expect(images[0].filename).toMatch(
                 /^image-[a-zA-Z0-9]{32}-[0-9]*\.(png|jpe?g|bmp)/
               );
-              if (fs.existsSync(`./public/img/gallery/${images[0].filename}`)) {
+              if (fs.existsSync(`./upload/img/gallery/${images[0].filename}`)) {
                 done();
               } else {
                 done(new Error('File does not exist'));

@@ -10,7 +10,7 @@ const galleryDirectory = path.join(
   __dirname,
   '..',
   '..',
-  'public',
+  'upload',
   'img',
   'gallery'
 );

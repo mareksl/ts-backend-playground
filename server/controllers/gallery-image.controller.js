@@ -8,7 +8,7 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const gallery_image_model_1 = __importDefault(require("../models/gallery-image.model"));
 const util_1 = require("../util/util");
-const galleryDirectory = path_1.default.join(__dirname, '..', '..', 'public', 'img', 'gallery');
+const galleryDirectory = path_1.default.join(__dirname, '..', '..', 'upload', 'img', 'gallery');
 const jimp_1 = __importDefault(require("jimp"));
 exports.post = (req, res) => {
     const fileName = req.file.filename;

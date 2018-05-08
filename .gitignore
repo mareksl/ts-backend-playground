@@ -1,4 +1,4 @@
 node_modules
 *.log
-public/img/gallery
+upload/img/gallery
 config/

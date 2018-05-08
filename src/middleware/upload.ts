@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import path from 'path';
 import { Request, Response, NextFunction } from 'express';
 
-const uploadDirectory = path.join(__dirname, '..', '..', 'public', 'tmp');
+const uploadDirectory = path.join(__dirname, '..', '..', 'upload', 'tmp');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
