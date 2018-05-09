@@ -22,6 +22,12 @@ const galleryImageController = __importStar(require("./controllers/gallery-image
 const usersController = __importStar(require("./controllers/users.controller"));
 const authenticate_1 = require("./middleware/authenticate");
 const app = express_1.default();
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PATCH,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-auth');
+    next();
+});
 app.use(body_parser_1.default.json());
 // Events routes
 app.get('/events', eventsController.get);
