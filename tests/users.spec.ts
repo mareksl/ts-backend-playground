@@ -1,6 +1,7 @@
 import request from 'supertest';
 import app from '../src/app';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 import { ObjectID } from 'mongodb';
 
@@ -114,6 +115,7 @@ describe('/users', () => {
             .catch(e => done(e));
         });
     });
+
     it('should reject invalid login', done => {
       request(app)
         .post('/users/login')
@@ -186,6 +188,21 @@ describe('/users', () => {
             })
             .catch(e => done(e));
         });
+    });
+
+    it('should reject invalid token', done => {
+      request(app)
+        .patch('/users/me')
+        .set(
+          'x-auth',
+          jwt
+            .sign(
+              { _id: new ObjectID().toHexString(), access: 'auth' },
+              process.env.JWT_SECRET
+            )
+            .toString()
+        )
+        .expect(401, done);
     });
   });
 });
