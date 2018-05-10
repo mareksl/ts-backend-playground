@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const validator_1 = __importDefault(require("validator"));
 const memberSchema = new mongoose_1.default.Schema({
     firstName: {
         type: String,
@@ -25,10 +24,6 @@ const memberSchema = new mongoose_1.default.Schema({
     avatar: {
         type: String,
         trim: true,
-        validate: {
-            validator: validator_1.default.isURL,
-            message: '{VALUE} is not a valid URL'
-        }
     },
     order: {
         type: Number,

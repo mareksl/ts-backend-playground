@@ -7,7 +7,7 @@ const multer_1 = __importDefault(require("multer"));
 const mime_1 = __importDefault(require("mime"));
 const crypto_1 = __importDefault(require("crypto"));
 const path_1 = __importDefault(require("path"));
-const uploadDirectory = path_1.default.join(__dirname, '..', '..', 'upload', 'tmp');
+const uploadDirectory = path_1.default.join(__dirname, '..', '..', process.env.UPLOAD_DIRECTORY || 'upload', 'tmp');
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
         cb(null, uploadDirectory);

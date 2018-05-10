@@ -1,4 +1,5 @@
 node_modules
 *.log
-upload/img/gallery
+upload/
+upload-test/
 config/

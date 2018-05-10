@@ -5,48 +5,37 @@ import fs from 'fs';
 
 import GalleryImage, { IGalleryImage } from '../models/gallery-image.model';
 import { pick } from '../util/util';
+import ImageProcessor from '../util/imageProcessor';
 
 const galleryDirectory = path.join(
   __dirname,
   '..',
   '..',
-  'upload',
+  process.env.UPLOAD_DIRECTORY || 'upload',
   'img',
   'gallery'
 );
-
-import jimp from 'jimp';
 
 export const post = (req: Request, res: Response) => {
   const fileName = req.file.filename;
   const filePath = req.file.path;
   const destination = path.join(galleryDirectory, fileName);
 
-  jimp
-    .read(filePath)
-    .then(image => {
-      if (image.bitmap.width > 1000) {
-        return image.resize(1000, jimp.AUTO);
-      }
-      return image;
-    })
-    .then(image => {
-      return image.quality(80).write(destination);
-    })
-    .then(() => {
-      fs.unlink(filePath, err => {
-        if (err) throw err;
-        return;
-      });
-    })
+  ImageProcessor.processImage({
+    filePath: filePath,
+    maxWidth: 1000,
+    quality: 60,
+    destination: destination
+  })
     .then(() => {
       const galleryImage = new GalleryImage({
         filename: fileName,
         title: req.body.title
       });
+
       galleryImage.save().then(image => res.send({ image }));
     })
-    .catch(err => res.status(500).send(err));
+    .catch(err => res.status(400).send(err));
 };
 
 export const get = (req: Request, res: Response) => {

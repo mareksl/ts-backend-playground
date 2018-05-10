@@ -109,12 +109,16 @@ export const populateGalleryImages = done => {
 export const copySeedImage = done => {
   const stream = fs
     .createReadStream('./tests/seed/files/test1.png')
-    .pipe(fs.createWriteStream('./upload/img/gallery/test1.png'));
+    .pipe(
+      fs.createWriteStream(
+        `./${process.env.UPLOAD_DIRECTORY}/img/gallery/test1.png`
+      )
+    );
   stream.on('finish', done);
 };
 
 export const deleteGalleryImages = done => {
-  rimraf('./upload/img/gallery/*', done);
+  rimraf(`./${process.env.UPLOAD_DIRECTORY}/img/gallery/*`, done);
 };
 
 const userOneId = new ObjectID();

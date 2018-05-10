@@ -8,29 +8,17 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const gallery_image_model_1 = __importDefault(require("../models/gallery-image.model"));
 const util_1 = require("../util/util");
-const galleryDirectory = path_1.default.join(__dirname, '..', '..', 'upload', 'img', 'gallery');
-const jimp_1 = __importDefault(require("jimp"));
+const imageProcessor_1 = __importDefault(require("../util/imageProcessor"));
+const galleryDirectory = path_1.default.join(__dirname, '..', '..', process.env.UPLOAD_DIRECTORY || 'upload', 'img', 'gallery');
 exports.post = (req, res) => {
     const fileName = req.file.filename;
     const filePath = req.file.path;
     const destination = path_1.default.join(galleryDirectory, fileName);
-    jimp_1.default
-        .read(filePath)
-        .then(image => {
-        if (image.bitmap.width > 1000) {
-            return image.resize(1000, jimp_1.default.AUTO);
-        }
-        return image;
-    })
-        .then(image => {
-        return image.quality(80).write(destination);
-    })
-        .then(() => {
-        fs_1.default.unlink(filePath, err => {
-            if (err)
-                throw err;
-            return;
-        });
+    imageProcessor_1.default.processImage({
+        filePath: filePath,
+        maxWidth: 1000,
+        quality: 60,
+        destination: destination
     })
         .then(() => {
         const galleryImage = new gallery_image_model_1.default({
@@ -39,7 +27,7 @@ exports.post = (req, res) => {
         });
         galleryImage.save().then(image => res.send({ image }));
     })
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(400).send(err));
 };
 exports.get = (req, res) => {
     gallery_image_model_1.default.find()
