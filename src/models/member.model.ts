@@ -30,10 +30,10 @@ const memberSchema = new mongoose.Schema({
   avatar: {
     type: String,
     trim: true,
-    // validate: {
-    //   validator: validator.isURL,
-    //   message: '{VALUE} is not a valid URL'
-    // }
+    validate: {
+      validator: validator.isURL,
+      message: '{VALUE} is not a valid URL'
+    }
   },
   order: {
     type: Number,
