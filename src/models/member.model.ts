@@ -19,13 +19,11 @@ const memberSchema = new mongoose.Schema({
   },
   lastName: {
     type: String,
-    minlength: 1,
-    trim: true
+    minlength: 1
   },
   bio: {
     type: String,
-    trim: true,
-    minlength: 1
+    trim: true
   },
   avatar: {
     type: String,
@@ -41,8 +39,7 @@ const memberSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    trim: true,
-    minlength: 1
+    trim: true
   }
 });
 
