@@ -19,7 +19,7 @@ const memberSchema = new mongoose.Schema({
   },
   lastName: {
     type: String,
-    minlength: 1
+    trim: 1
   },
   bio: {
     type: String,
