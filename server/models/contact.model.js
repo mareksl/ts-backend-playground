@@ -17,17 +17,14 @@ const contactSchema = new mongoose_1.Schema({
         required: function () {
             return this.type === 'person';
         },
-        minlength: 1,
         trim: true
     },
     lastName: {
         type: String,
-        minlength: 1,
         trim: true
     },
     title: {
         type: String,
-        minlength: 1,
         trim: true,
         required: function () {
             return this.type === 'general';
@@ -35,7 +32,6 @@ const contactSchema = new mongoose_1.Schema({
     },
     email: {
         type: String,
-        minlength: 1,
         trim: true,
         validate: {
             validator: validator_1.default.isEmail,
@@ -47,7 +43,6 @@ const contactSchema = new mongoose_1.Schema({
     },
     phone: {
         type: String,
-        minlength: 1,
         trim: true,
         validate: {
             validator: (val) => validator_1.default.isMobilePhone(val, 'any'),
@@ -59,7 +54,6 @@ const contactSchema = new mongoose_1.Schema({
     },
     link: {
         type: String,
-        minlength: 1,
         trim: true,
         validate: {
             validator: validator_1.default.isURL,

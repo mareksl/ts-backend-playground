@@ -33,17 +33,14 @@ const contactSchema = new Schema(<SchemaDefinition & ContactSchema>{
     required: function() {
       return this.type === 'person';
     },
-    minlength: 1,
     trim: true
   },
   lastName: {
     type: String,
-    minlength: 1,
     trim: true
   },
   title: {
     type: String,
-    minlength: 1,
     trim: true,
     required: function() {
       return this.type === 'general';
@@ -51,7 +48,6 @@ const contactSchema = new Schema(<SchemaDefinition & ContactSchema>{
   },
   email: {
     type: String,
-    minlength: 1,
     trim: true,
     validate: {
       validator: validator.isEmail,
@@ -63,7 +59,6 @@ const contactSchema = new Schema(<SchemaDefinition & ContactSchema>{
   },
   phone: {
     type: String,
-    minlength: 1,
     trim: true,
     validate: {
       validator: (val: string) => validator.isMobilePhone(val, 'any'),
@@ -75,7 +70,6 @@ const contactSchema = new Schema(<SchemaDefinition & ContactSchema>{
   },
   link: {
     type: String,
-    minlength: 1,
     trim: true,
     validate: {
       validator: validator.isURL,
